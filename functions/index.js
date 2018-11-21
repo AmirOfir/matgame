@@ -25,9 +25,23 @@ var users = [{
     
 }];
 
-function allowedToREquest(id) {
-    return true;
-}
+(function () {
+    let history = {};
+    const time_limit = 1000; // ms
+    function allowedToREquest(id) {
+        if (!history[id]) {
+            // first time user ask something
+            // TODO
+            return true;
+        } else if (history[id] + time_limit < +new Date()) {
+            // to frequent, we won't answer this
+            return false;
+        } else {
+            history[id] = +new Date()
+            return true
+        }
+    }
+})()
 
 function shuffle (arr) {
     arr.sort(() => Math.random < 0.5);
