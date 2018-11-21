@@ -7,11 +7,11 @@ const functions = require('firebase-functions');
 //  response.send("Hello from Firebase!");
 // });
 
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 // configure app here, add routes, whatever
-exports.api = functions.https.onRequest(app)
-console.log('running')
+
+console.log('running');
 
 app.get('/echo', function(req,res) {
     res.send('hello');
@@ -40,3 +40,5 @@ app.get('/around/:lat/:log/:radius',(req, res)=>{
       'Cache-Control': 'no-cache'
     });
 })
+
+exports.api = functions.https.onRequest(app);
