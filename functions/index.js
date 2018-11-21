@@ -17,4 +17,28 @@ app.get('/echo', function(req,res) {
     res.send('hello');
 });
 
+var users = [{
+    id: "123456789",
+    lon: 29.5,
+    lat: 32.3,
+    displayName: "happy test user",
+    
+}];
+
+function allowedToREquest(id) {
+    return true;
+}
+
+app.get('/around/:lat/:log/:radius',(req, res)=>{
+    if(!allowedToREquest(req.headers.authentication)){
+        return;
+    }
+    res.writeHead(200, {
+      'Content-Type': mimeType,
+      'Content-Length': contents.length,
+      'Accept-Ranges': 'bytes',
+      'Cache-Control': 'no-cache'
+    });
+})
+
 exports.api = functions.https.onRequest(app);
