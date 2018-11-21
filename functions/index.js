@@ -29,6 +29,10 @@ function allowedToREquest(id) {
     return true;
 }
 
+function shuffle (arr) {
+    arr.sort(() => Math.random < 0.5);
+}
+
 app.get('/around/:lat/:log/:radius',(req, res)=>{
     if(!allowedToREquest(req.headers.authentication)){
         return;
@@ -39,6 +43,12 @@ app.get('/around/:lat/:log/:radius',(req, res)=>{
       'Accept-Ranges': 'bytes',
       'Cache-Control': 'no-cache'
     });
+    res.send(JSON.stringify(
+        shuffle(users
+                .filter(user => Math.abs(+user.lat - req.params.lat) < +req.params.radius)
+                .filter(user => Math.abs(+user.lon - req.params.lon) < +req.params.radius)
+               ).slice(5) // give 5 random results
+    ));
 })
 
 exports.api = functions.https.onRequest(app);
